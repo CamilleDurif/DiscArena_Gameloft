@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
         prediction.CreatePhysicsScene(currentLevel);
         restingTries = 4;
         triesText.text = restingTries + discText;
+        puckButton.interactable = false;
     }
     
     private void FixedUpdate()
@@ -75,9 +76,11 @@ public class GameManager : MonoBehaviour
         restingTries--;
         triesText.text = restingTries + discText;
         isPuckReady = false;
+        puckButton.interactable = true;
         if (restingTries == 0)
         {
             isLastPuck = true;
+            puckButton.interactable = false;
         }
         currentPuck.AddImpulse(forceDirection*forcePower, isLastPuck);
     }
@@ -101,7 +104,6 @@ public class GameManager : MonoBehaviour
         
         if (restingTries <= 0)
         {
-            puckButton.interactable = false;
             return;
         }
         puckRigidbody.velocity = Vector3.zero;
@@ -110,6 +112,7 @@ public class GameManager : MonoBehaviour
         currentPuck.TriggerBumpAnimation();
         isPuckReady = true;
         ShowHealthBars(false);
+        puckButton.interactable = false;
     }
 
     public void OnhittingObstacle(Obstacle obstacle)
